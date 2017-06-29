@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>prizeRate</title>
+</head>
+<body>
+
+<script>
+    var option = {
+        prizeNum: 8,
+        prizeRate: [1, 1, 1, 1, 1, 1, 1, 2]
+    };
+    /**
+     * 按比例生成随机奖品。
+     * @param option 传入参数（数组形式的奖品比例（prizeRate[1,1...]）等参数）
+     * @returns {number} 返回奖品index
+     */
+    function prizeRate(option) {
+        option = option || {
+                prizeNum: 8,
+                prizeRate: [1, 1, 1, 1, 1, 1, 1, 1]
+            };
+        if (option.prizeRate.length < option.prizeNum) {
+            for (var i = option.prizeNum; i < option.prizeRate.length; i++) {
+                option.prizeRate.push(1);
+            }
+        }
+        var total = 0;
+        option.prizeRate.forEach(function (v) {
+            total += v;
+        });
+//        console.log(total);
+        var rand = Math.floor(Math.random() * total); //生成随机数
+//        console.log(rand);
+        var temp = 0;
+        // 判断随机数区间，返回奖品index。
+        for (var i = 0; i < option.prizeRate.length; i++) {
+            temp += option.prizeRate[i];
+            if (rand < temp) {
+//                console.log(temp);
+//                console.log("奖品是：" + i);
+                return i;
+            }
+        }
+    }
+
+    //调用 生成中奖序号。
+    var rand = prizeRate(option);
+    console.log(rand);
+</script>
+</body>
+</html>
